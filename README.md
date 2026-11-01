@@ -156,6 +156,9 @@ public class SecondActivity extends AppCompatActivity {
 
 <img width="1917" height="1078" alt="Screenshot 2026-11-01 183626" src="https://github.com/user-attachments/assets/990a9ad3-9bad-48cb-802f-1b7a18199638" />
 
+<img width="1917" height="1078" alt="Screenshot 2026-11-01 183531" src="https://github.com/user-attachments/assets/1a3d0b3c-f1e3-4afc-b9f6-655be5360a33" />
+
+
 <img width="1917" height="1078" alt="Screenshot 2026-11-01 183659" src="https://github.com/user-attachments/assets/8dad39df-2419-44b1-a4c0-f8b5a52a87c1" />
 
 
