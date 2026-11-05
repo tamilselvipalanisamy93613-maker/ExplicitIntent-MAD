@@ -34,133 +34,146 @@ Registeration Number :212225040460
 ```
 ## activity_main.xml
 ```
-package com.example.explicitintent;
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
+    <EditText
+        android:id="@+id/number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a number"
+        android:inputType="number" />
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+    <Button
+        android:id="@+id/factorialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Factorial" />
 
-public class MainActivity extends AppCompatActivity {
-
-    Button explicitButton;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
-        explicitButton = findViewById(R.id.explicitButton);
-
-        explicitButton.setOnClickListener(v -> {
-
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-
-            startActivity(intent);
-
-        });
-    }
-
-
-}
-
+</LinearLayout>
 ```
 ## activity_second.xml
 ```
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-
     <TextView
+        android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is Second Activity"
-        android:textSize="25sp"
-        android:textStyle="bold"/>
-
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </LinearLayout>
 
 ```
 ## MainActivity.java
 ```
-package com.example.explicitintent;
+package com.example.factorialintent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button explicitButton;
+    EditText number;
+    Button factorialButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        explicitButton = findViewById(R.id.explicitButton);
+        number = findViewById(R.id.number);
+        factorialButton = findViewById(R.id.factorialButton);
 
-        explicitButton.setOnClickListener(v -> {
+        factorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                String input = number.getText().toString();
 
-            startActivity(intent);
+                if (input.isEmpty()) {
+                    Toast.makeText(MainActivity.this,
+                            "Enter a number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                int n = Integer.parseInt(input);
+
+                if (n < 0 || n > 20) {
+                    Toast.makeText(MainActivity.this,
+                            "Enter a number between 0 and 20",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                long fact = 1;
+
+                for (int i = 1; i <= n; i++) {
+                    fact = fact * i;
+                }
+
+                Intent intent = new Intent(
+                        MainActivity.this, SecondActivity.class);
+
+                intent.putExtra("result",
+                        "Factorial of " + n + " is " + fact);
+
+                startActivity(intent);
+            }
         });
     }
-
-
 }
-
 ```
 
 ## SecondActivity.java
 ```
-package com.example.explicitintent;
+package com.example.factorialintent;
 
 import android.os.Bundle;
-
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SecondActivity extends AppCompatActivity {
 
+    TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        result = findViewById(R.id.result);
+
+        String value = getIntent().getStringExtra("result");
+
+        result.setText(value);
     }
-
-
 }
-
 ```
 
 ## OUTPUT
 
-<img width="1917" height="1078" alt="Screenshot 2026-11-01 183615" src="https://github.com/user-attachments/assets/6a438c7b-3be3-4070-9606-9128d5b7ef4a" />
-
-<img width="1917" height="1078" alt="Screenshot 2026-11-01 183626" src="https://github.com/user-attachments/assets/990a9ad3-9bad-48cb-802f-1b7a18199638" />
-
-<img width="1917" height="1078" alt="Screenshot 2026-11-01 183531" src="https://github.com/user-attachments/assets/1a3d0b3c-f1e3-4afc-b9f6-655be5360a33" />
+<img width="1916" height="1020" alt="Screenshot 2026-11-05 210006" src="https://github.com/user-attachments/assets/7f273611-152e-47c0-abc3-a43662f8939b" />
 
 
-<img width="1917" height="1078" alt="Screenshot 2026-11-01 183659" src="https://github.com/user-attachments/assets/8dad39df-2419-44b1-a4c0-f8b5a52a87c1" />
-
+<img width="1917" height="1016" alt="Screenshot 2026-11-05 210043" src="https://github.com/user-attachments/assets/794d5e39-e7c7-4d8d-add1-bd3ab192f436" />
 
 
 ## RESULT
